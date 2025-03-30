@@ -1,0 +1,54 @@
+. "$HOME/.local/bin/env"
+
+autoload -U select-word-style
+select-word-style bash
+
+export PATH=/Users/purujitb/.local/share/uv/python:$PATH
+
+# Aliases
+alias vim=nvim
+alias vi=nvim
+alias cd=z
+
+export EDITOR=nvim
+export VISUAL="$EDITOR"
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
+
+# Footer
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+zinit light 'MichaelAquilina/zsh-you-should-use'
+
+autoload -U compinit; compinit
+source ~/workspace/fzf-tab/fzf-tab.plugin.zsh
