@@ -144,6 +144,29 @@ return {
 					},
 				})
 			end,
+			["basedpyright"] = function()
+				lspconfig["basedpyright"].setup({
+					capabilities = capabilities,
+					on_attach = on_attach,
+					settings = {
+						basedpyright = {
+							analysis = {
+								typeCheckingMode = "strict",
+								deprecateTypingAliases = true,
+								diagnosticSeverityOverrides = {
+									reportDeprecated = "warning",
+								},
+								inlayHints = {
+									variableTypes = true,
+									functionReturnTypes = true,
+									callArgumentNames = true,
+									-- pytestParameters = true,
+								},
+							},
+						},
+					},
+				})
+			end,
 		})
 	end,
 }

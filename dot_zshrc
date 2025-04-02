@@ -24,6 +24,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
 # Footer
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(direnv hook zsh)"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
