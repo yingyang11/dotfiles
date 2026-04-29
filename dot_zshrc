@@ -1,55 +1,27 @@
 . "$HOME/.local/bin/env"
 
-autoload -U select-word-style
-select-word-style bash
-
-export PATH=/Users/purujitb/.local/share/uv/python:$PATH
-
-# Aliases
-alias vim=nvim
-alias vi=nvim
-alias cd=z
-
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 
+alias vi=nvim
+alias vim=nvim
+alias cd=z
+alias zz=lazygit
+alias ll='eza -lahF --icons --sort=modified'
+
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
+export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# FZF tab
+autoload -U compinit; compinit
+source ~/fzf-tab/fzf-tab.plugin.zsh
+zstyle ':fzf-tab:*' fzf-flags ${(z)FZF_DEFAULT_OPTS}
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue,bold,underline"
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
-
-# Footer
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-eval "$(direnv hook zsh)"
-
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
-
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
-### End of Zinit's installer chunk
-
-zinit light 'MichaelAquilina/zsh-you-should-use'
-
-autoload -U compinit; compinit
-source ~/workspace/fzf-tab/fzf-tab.plugin.zsh
